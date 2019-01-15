@@ -22,7 +22,6 @@ app.get("/getid/:id/:two", function (req, res) {
   var id = req.params.id
   console.log(req.params)
   res.send(id + "----" + req.params.two);
-
 })
 
 // 使用正则匹配参数，参数必须是10位数字
@@ -35,7 +34,6 @@ app.get(/^\/params\/([\d]{10})$/, function (req, res) {
 // get传参 http://localhost:8888/index?id=123&name=22&rose=22
 app.get("/index", function (req, res) {
   console.log(req.query) //输出{ id: '123', name: '"rose"' }类型
-
   res.json(req.query)
 })
 

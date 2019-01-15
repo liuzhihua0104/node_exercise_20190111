@@ -46,22 +46,41 @@ var server = http.createServer(function (req, res) {
 
       var myDb = db.db("user");
       var result = myDb.collection("dancer").find({});
-      console.log(result)
+      // console.log(result)
 
       let list = [];
 
-      result.each(function (err, doc) {
+      // each的写法已经不用了
+      // result.each(function (err, doc) {
+      //   if (err) {
+      //     console.log("result失败");
+      //     return;
+      //   }
+
+      //   if (doc != null) {
+      //     list.push(doc); //一条一条将数据插入到list数组中
+      //   } else {
+      //     // res.send({ list: list })
+      //     console.log(list)
+      //     db.close();
+      //   }
+      // })
+
+      // 现在用的是forEach 写法，好像只有一个参数
+      result.forEach(function (doc) {
+        list.push(doc);
+        console.log(list.length, "--------------------------")
+
+      }, function (err) {
+        // 遍历完成之后的回调
         if (err) {
-          console.log("result失败");
-          return;
+          console.log("输出了err");
+          return
         }
 
-        if (doc != null) {
-          list.push(doc); //一条一条将数据插入到list数组中
-        } else {
-          res.end(list)
-          db.close();
-        }
+        console.log("遍历完成======================")
+        console.log(list)
+        db.close(); //关闭数据库
 
       })
 

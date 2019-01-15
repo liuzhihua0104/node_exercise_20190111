@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
-<body>
-  <!-- 这个文件只服务于08_nodejs中引入mongodb.js文件 -->
-  <div><%= msg %></div>
 
-  
+<body>
+  <div>
+    <%= msg %>
+  </div>
+  <ul>
+    <% for (var i=0;i<list.length;i++){ %>
+    <li>
+      <%= i+1 %> ----
+      <%= list[i]._id %>
+      ----
+      <%= list[i].name %>
+    </li>
+    <% } %>
+  </ul>
+
+
 </body>
+
 </html>

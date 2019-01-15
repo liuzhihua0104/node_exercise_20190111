@@ -78,6 +78,16 @@ var server = http.createServer(function (req, res) {
           return
         }
 
+        // 渲染ejs模板引擎
+        ejs.renderFile("views/testMongo.ejs", { msg: "10_mongodb查找数据.js", list: list }, function (err, data) {
+          if (err) {
+            res.end("fail");
+            return
+          }
+
+          res.end(data)
+        })
+
         console.log("遍历完成======================")
         console.log(list)
         db.close(); //关闭数据库

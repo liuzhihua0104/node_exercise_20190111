@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    td {
+      width: 200px;
+      line-height: 28px;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div>这是ejs模板引擎返回的页面</div>
+  <!-- 所有的js逻辑都写到<%%>中，所有的输出都写到 <%= %>中 -->
+  <%= element%>
+  <%- element%>
+
+  <table>
+    <!-- <tr>
+      <th></th>
+      <th>Savings</th>
+    </tr> -->
+
+    <% for(var i=0;i<erpData.length;i++ ){   %>
+    <tr>
+      <td>
+        <%= erpData[i].categoryName  %>
+      </td>
+      <td>
+        <%= erpData[i].eDishCode  %>
+      </td>
+      <td>
+        <%= erpData[i].eDishSkuCode  %>
+      </td>
+      <td>
+        <%= erpData[i].dishNameWithSpec  %>
+      </td>
+      <td>
+        <%= erpData[i].dishName  %>
+      </td>
+    </tr>
+
+    <% } %>
+  </table>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "rose-node-exercises-20190102",
+  "version": "1.0.0",
+  "description": "npm install",
+  "main": "01_fs检测文件夹是否存在.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1"
+  },
+  "devDependencies": {
+    "mongodb": "^3.1.10"
+  }
+}

@@ -32,6 +32,13 @@ app.get(/^\/params\/([\d]{10})$/, function (req, res) {
   res.json({id:params[0]})
 })
 
+// get传参 http://localhost:8888/index?id=123&name=22&rose=22
+app.get("/index", function (req, res) {
+  console.log(req.query) //输出{ id: '123', name: '"rose"' }类型
+
+  res.json(req.query)
+})
+
 
 // 5、监听端口
 app.listen(8888, "127.0.0.1")

@@ -17,7 +17,6 @@ app.get("/set", function (req, res) {
 			res.send("有去过的城市记录--路由中没有输入新的城市---" + citys);
 			return
 		} else {
-
 			if (citys.indexOf(req.query.luyou) == -1) { //去重
 				citys.push(req.query.luyou); //更新去过的城市
 			}

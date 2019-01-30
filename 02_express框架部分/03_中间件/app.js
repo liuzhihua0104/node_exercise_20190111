@@ -32,7 +32,6 @@ app.get("/login", function (req, res) {
 app.get("/loginOut", function (req, res) {
   //重新设置 cookie 的过期时间
   // req.session.userInfo.maxAge = 0;
-
   req.session.destroy(function (err) { /*销毁 session*/
     if (err) {
       console.log(err);

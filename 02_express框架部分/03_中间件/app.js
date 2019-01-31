@@ -30,6 +30,7 @@ app.get("/", function (req, res) {
   }
 })
 
+
 app.get("/login", function (req, res) {
   req.session.userInfo = "loginSuccess";
   res.send("登录成功")
@@ -45,7 +46,6 @@ app.get("/loginOut", function (req, res) {
     }
     res.send("退出成功！");
   });
-
 })
 
 

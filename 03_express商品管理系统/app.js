@@ -19,12 +19,10 @@ app.get("/", function (req, res) {
 })
 
 app.post("/dologin", function (req, res) {
-
-
   MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, db) {
     if (err) {
       res.send("连接数据库失败")
-    } {
+    } else {
       // res.send(req.body)
       // 查找数据
       var myDb = db.db("product");
@@ -41,10 +39,15 @@ app.post("/dologin", function (req, res) {
         }
         if (list.length == 1) {
           // res.send(req.body)
-          res.send("登录成功！")
+          // res.send("登录成功！")
+          res.json({ code: 200, data: list })
+        } else {
+          res.json({ code: 200, msg: "登录失败" })
         }
 
       })
+
+      db.close();
     }
   })
 

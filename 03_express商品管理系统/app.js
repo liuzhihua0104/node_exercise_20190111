@@ -12,6 +12,21 @@ let dbUrl = "mongodb://localhost:27017"
 
 app.use(express.static("public")); //配置静态文件
 
+// 路由
+app.use(function (req, res, next) {
+  console.log(req.url);
+  if(req.url=="/login"|| req.url=="/dologin"){
+    next();
+  }else{
+    if(req.session.username){ //检查有没有session登录信息
+      // 设置ejs引擎公共值，不用每一个页面都传递用户名称
+      app.locals["userinfo"]=req.session.username;
+      next()
+    }
+  }
+ 
+})
+
 app.set("view engine", "ejs");//设置ejs引擎
 
 app.get("/", function (req, res) {
@@ -58,7 +73,6 @@ app.post("/dologin", function (req, res) {
         }
         if (data.length == 1) {
           // res.json({ code: 200, data })
-
           res.redirect("/product") //登录成功跳转到product页面
         } else {
           // res.json({ code: 200, msg: "登录失败" })

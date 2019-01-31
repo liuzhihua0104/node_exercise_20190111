@@ -57,10 +57,15 @@ app.post("/dologin", function (req, res) {
           return
         }
         if (data.length == 1) {
-          res.json({ code: 200, data })
+          // res.json({ code: 200, data })
+
+          res.redirect("/product") //登录成功跳转到product页面
         } else {
-          res.json({ code: 200, msg: "登录失败" })
+          // res.json({ code: 200, msg: "登录失败" })
+          // 登录失败出弹框提示
+          res.send("<script>alert('登录失败！'); window.location.href='/'; </script>")
         }
+
       })
       db.close();
     }

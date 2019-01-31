@@ -28,25 +28,40 @@ app.post("/dologin", function (req, res) {
       var myDb = db.db("product");
       var result = myDb.collection("user").find(req.body);
       let list = [];
-      result.forEach(function (doc) {
-        list.push(doc);
-        console.log(list.length + "=================")
 
-      }, function (err) {
+      // 第一种遍历的方法
+      // result.forEach(function (doc) {
+      //   list.push(doc);
+      //   console.log(list.length + "=================")
+
+      // }, function (err) {
+      //   if (err) {
+      //     console.log("遍历出问题了");
+      //     return
+      //   }
+      //   if (list.length == 1) {
+      //     // res.send(req.body)
+      //     // res.send("登录成功！")
+      //     res.json({ code: 200, data: list })
+      //   } else {
+      //     res.json({ code: 200, msg: "登录失败" })
+      //   }
+
+      // })
+
+
+      // 第二种遍历的方法
+      result.toArray(function (err, data) {
         if (err) {
-          console.log("遍历出问题了");
+          console.log(err);
           return
         }
-        if (list.length == 1) {
-          // res.send(req.body)
-          // res.send("登录成功！")
-          res.json({ code: 200, data: list })
+        if (data.length == 1) {
+          res.json({ code: 200, data })
         } else {
           res.json({ code: 200, msg: "登录失败" })
         }
-
       })
-
       db.close();
     }
   })

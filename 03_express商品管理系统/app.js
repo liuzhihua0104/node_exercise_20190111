@@ -8,28 +8,35 @@ app.use(bodyParser.json())
 
 // 使用mongodb
 let MongoClient = require("mongodb").MongoClient;
-let dbUrl = "mongodb://localhost:27017"
+let dbUrl = "mongodb://localhost:27017";
 
 app.use(express.static("public")); //配置静态文件
 
+
+
 // 路由
 app.use(function (req, res, next) {
-  console.log(req.url);
-  if(req.url=="/login"|| req.url=="/dologin"){
+  // console.log(req.url);
+  if (req.url == "/login" || req.url == "/dologin") {
     next();
-  }else{
-    if(req.session.username){ //检查有没有session登录信息
+  } else {
+    if (req && req.session && req.session.username) { //检查有没有session登录信息
       // 设置ejs引擎公共值，不用每一个页面都传递用户名称
-      app.locals["userinfo"]=req.session.username;
+      console.log(33333333)
+      app.locals["userinfo"] = req.session.username;
       next()
+    } else {
+      res.redirect("/login")
+      next();
     }
   }
- 
+
 })
+
 
 app.set("view engine", "ejs");//设置ejs引擎
 
-app.get("/", function (req, res) {
+app.get("/login", function (req, res) {
   res.render("login")
 })
 
@@ -68,15 +75,17 @@ app.post("/dologin", function (req, res) {
       // 第二种遍历的方法
       result.toArray(function (err, data) {
         if (err) {
-          console.log(err);
+          console.log("00000");
           return
         }
         if (data.length == 1) {
+          console.log(11111)
           // res.json({ code: 200, data })
           res.redirect("/product") //登录成功跳转到product页面
         } else {
           // res.json({ code: 200, msg: "登录失败" })
           // 登录失败出弹框提示
+          console.log(2222)
           res.send("<script>alert('登录失败！'); window.location.href='/'; </script>")
         }
 
@@ -88,6 +97,7 @@ app.post("/dologin", function (req, res) {
   // 拿到用户数据去数据库查询是否存在
 })
 app.get("/product", function (req, res) {
+  console.log("product")
   res.render("product")
 })
 app.get("/productadd", function (req, res) {
@@ -101,4 +111,4 @@ app.get("/productdelete", function (req, res) {
   res, send("productdelete")
 })
 
-app.listen(8888, "127.0.0.1")
+app.listen(8888, "localhost")

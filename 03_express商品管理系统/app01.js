@@ -52,44 +52,47 @@ app.post("/dologin", function (req, res) {
       let list = [];
 
       // 第一种遍历的方法
-      // result.forEach(function (doc) {
-      //   list.push(doc);
-      //   console.log(list.length + "=================")
+      result.forEach(function (doc) {
+        list.push(doc);
+        console.log(list.length + "=================")
 
-      // }, function (err) {
-      //   if (err) {
-      //     console.log("遍历出问题了");
-      //     return
-      //   }
-      //   if (list.length == 1) {
-      //     // res.send(req.body)
-      //     // res.send("登录成功！")
-      //     res.json({ code: 200, data: list })
-      //   } else {
-      //     res.json({ code: 200, msg: "登录失败" })
-      //   }
-
-      // })
+      }, function (err) {
+        if (err) {
+          console.log("遍历出问题了");
+          return
+        }
+        if (list.length == 1) {
+          // res.send(req.body)
+          // res.send("登录成功！")
+          // res.json({ code: 200, data: list })
+          return res.redirect("/product");
+        } else {
+          return res.json({ code: 200, msg: "登录失败" })
+        }
+      })
 
 
       // 第二种遍历的方法
-      result.toArray(function (err, data) {
-        if (err) {
-          console.log("00000");
-          return
-        }
-        if (data.length == 1) {
-          console.log(11111)
-          // res.json({ code: 200, data })
-          res.redirect("/product") //登录成功跳转到product页面
-        } else {
-          // res.json({ code: 200, msg: "登录失败" })
-          // 登录失败出弹框提示
-          console.log(2222)
-          res.send("<script>alert('登录失败！'); window.location.href='/'; </script>")
-        }
+      // result.toArray(function (err, data) {
+      //   if (err) {
+      //     console.log("00000");
+      //     return
+      //   }
+      //   console.log(data, data.length)
+      //   if (data.length == 1) {
+      //     console.log(11111)
+      //     // res.json({ code: 200, data })
+      //     res.redirect("/product") //登录成功跳转到product页面
+      //     return
+      //   } else {
+      //     // res.json({ code: 200, msg: "登录失败" })
+      //     // 登录失败出弹框提示
+      //     console.log(2222)
+      //     res.send("<script>alert('登录失败！'); window.location.href='/'; </script>");
+      //     return;
+      //   }
 
-      })
+      // })
       db.close();
     }
   })

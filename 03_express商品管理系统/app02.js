@@ -16,7 +16,31 @@ app.use(bodyParser.json())
 let MongoClient = require("mongodb").MongoClient;
 let dbUrl = "mongodb://localhost:27017";
 
+// 用session保存用户信息
+let session = require("express-session");
+// 配置body-parser中间件
+app.use(session({
+  secret: "keyboard cat",
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 30 },
+  rolling: true
+}))
 
+
+// 
+app.use(function (req, res, next) {
+  if (req.url == "/login" || req.url == "/dologin") {
+    next();
+  } else {
+    // 检查是否有session,
+    if (req.session && req.session.userInfo && req.session.userInfo.name) {
+      next()
+    } else {
+      res.redirect("/login");
+    }
+  }
+})
 
 app.get("/login", function (req, res) {
   res.render("login.ejs")
@@ -34,7 +58,7 @@ app.post("/dologin", function (req, res) {
     // 从数据库查找数据
     let myDb = db.db("product"); //要去哪个数据库中查询
     let result = myDb.collection("user").find(req.body); //要去数据库的哪个集合中查找，req.body是查询条件
-    let list = [];
+    // let list = [];
 
     // 第一种遍历方法
     // result.forEach(function (doc) {
@@ -56,13 +80,12 @@ app.post("/dologin", function (req, res) {
     // 第二种遍历方法
     result.toArray(function (err, data) {
       if (data.length == 1) {
-        res.redirect("/product")
+        req.session.userInfo = data[0];// 用session保存用户信息
+        res.redirect("/product");
       } else {
         res.send("<script> location.href='/login'; alert('登录失败')</script>");
       }
     })
-
-
   })
 
 

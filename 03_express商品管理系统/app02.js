@@ -28,13 +28,15 @@ app.use(session({
 }))
 
 
-// 
+// 中间件配置路由权限检测是否有session
 app.use(function (req, res, next) {
   if (req.url == "/login" || req.url == "/dologin") {
     next();
   } else {
     // 检查是否有session,
-    if (req.session && req.session.userInfo && req.session.userInfo.name) {
+    if (req.session && req.session.userInfo && req.session.userInfo.username) {
+      // 设置ejs全局变量“userinfo”的值
+      app.locals["userinfo"]=req.session.userInfo.username;
       next()
     } else {
       res.redirect("/login");
@@ -81,6 +83,8 @@ app.post("/dologin", function (req, res) {
     result.toArray(function (err, data) {
       if (data.length == 1) {
         req.session.userInfo = data[0];// 用session保存用户信息
+        // console.log(data)
+        // console.log(req.session.userInfo)
         res.redirect("/product");
       } else {
         res.send("<script> location.href='/login'; alert('登录失败')</script>");
@@ -102,6 +106,7 @@ app.get("/productadd", function (req, res) {
 // app.get("/productdelete", function (req, res) {
 //   res.render("product.ejs")
 // })
+
 app.get("/productedit", function (req, res) {
   res.render("productedit.ejs")
 })
